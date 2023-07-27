@@ -2,6 +2,8 @@
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 using UnityEngine.InputSystem;
 #endif
+using FishNet.Connection;
+using FishNet.Object;
 
 namespace StarterAssets
 {
@@ -9,7 +11,7 @@ namespace StarterAssets
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 	[RequireComponent(typeof(PlayerInput))]
 #endif
-	public class FirstPersonController : MonoBehaviour
+	public class FirstPersonController : NetworkBehaviour
 	{
 		[Header("Player")]
 		[Tooltip("Move speed of the character in m/s")]
@@ -73,6 +75,20 @@ namespace StarterAssets
 		private GameObject _mainCamera;
 
 		private const float _threshold = 0.01f;
+
+		//we getting ghetto now
+		[SerializeField] private Camera playerCamera;
+
+	public override void OnStartClient(){
+		base.OnStartClient();
+		if(base.IsOwner){
+			playerCamera = Camera.main;
+			playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
+			playerCamera.transform.SetParent(transform);
+		}else{
+			gameObject.GetComponent<FirstPersonController>().enabled = false;
+	}
+    }
 
 		private bool IsCurrentDeviceMouse
 		{
