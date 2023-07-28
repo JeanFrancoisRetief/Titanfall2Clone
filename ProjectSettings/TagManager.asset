@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Camera
+  - RightTrigger
+  - LeftTrigger
   layers:
   - Default
   - TransparentFX

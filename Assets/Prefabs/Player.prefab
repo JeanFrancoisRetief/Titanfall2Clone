@@ -117,12 +117,14 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 616051915}
   _networkObjectCache: {fileID: 616051915}
   speed: 25
+  isGrounded: 0
   sensitivity: 150
   ground:
     serializedVersion: 2
     m_Bits: 4294967295
   JumpForce: 10
   playerCam: {fileID: 0}
+  rb: {fileID: 0}
   cameraYoffset: 0
 --- !u!54 &210081774267750696
 Rigidbody:
