@@ -4,19 +4,18 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - CinemachineTarget
-  - FollowCam
+  - Camera
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Ground
   - Water
   - UI
   - 
   - 
-  - Character
-  - Ground
+  - 
+  - 
   - 
   - 
   - 
