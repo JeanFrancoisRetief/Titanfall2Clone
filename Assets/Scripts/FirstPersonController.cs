@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 #endif
 using FishNet.Connection;
 using FishNet.Object;
+using Cinemachine;
 
 namespace StarterAssets
 {
@@ -78,16 +79,30 @@ namespace StarterAssets
 
 		//we getting ghetto now
 		[SerializeField] private Camera playerCamera;
+		[SerializeField] private GameObject followCam;
 
 	public override void OnStartClient(){
 		base.OnStartClient();
 		if(base.IsOwner){
-			playerCamera = Camera.main;
-			playerCamera.transform.position = new Vector3(transform.position.x, transform.position.y + 1, transform.position.z);
-			playerCamera.transform.SetParent(transform);
-		}else{
-			gameObject.GetComponent<FirstPersonController>().enabled = false;
-	}
+				_controller = gameObject.GetComponent<CharacterController>();
+
+				if (_mainCamera == null)
+				{
+					_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
+					
+				}
+
+				followCam = GameObject.FindGameObjectWithTag("FollowCam");
+				followCam.GetComponent<CinemachineVirtualCamera>().Follow = (CinemachineCameraTarget.transform);
+				_mainCamera.transform.position = new Vector3(CinemachineCameraTarget.transform.position.x, CinemachineCameraTarget.transform.position.y + 1, CinemachineCameraTarget.transform.position.z);
+				_mainCamera.transform.SetParent(CinemachineCameraTarget.transform);
+
+				
+			}
+			else{
+				//gameObject.GetComponent<FirstPersonController>().enabled = false;
+				gameObject.GetComponent<CharacterController>().enabled = false;
+			}
     }
 
 		private bool IsCurrentDeviceMouse
@@ -105,15 +120,12 @@ namespace StarterAssets
 		private void Awake()
 		{
 			// get a reference to our main camera
-			if (_mainCamera == null)
-			{
-				_mainCamera = GameObject.FindGameObjectWithTag("MainCamera");
-			}
+			
 		}
 
 		private void Start()
 		{
-			_controller = GetComponent<CharacterController>();
+			//_controller = gameObject.GetComponent<CharacterController>();
 			_input = GetComponent<StarterAssetsInputs>();
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
 			_playerInput = GetComponent<PlayerInput>();
@@ -179,7 +191,8 @@ namespace StarterAssets
 			if (_input.move == Vector2.zero) targetSpeed = 0.0f;
 
 			// a reference to the players current horizontal velocity
-			float currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
+			float currentHorizontalSpeed =0;
+			if (_controller != null) currentHorizontalSpeed = new Vector3(_controller.velocity.x, 0.0f, _controller.velocity.z).magnitude;
 
 			float speedOffset = 0.1f;
 			float inputMagnitude = _input.analogMovement ? _input.move.magnitude : 1f;
@@ -208,10 +221,11 @@ namespace StarterAssets
 			{
 				// move
 				inputDirection = transform.right * _input.move.x + transform.forward * _input.move.y;
+				Debug.Log("Trigger 1");
 			}
 
 			// move the player
-			_controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+			if(_controller != null) _controller.Move(inputDirection.normalized * (_speed * Time.deltaTime) + new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
 		}
 
 		private void JumpAndGravity()
