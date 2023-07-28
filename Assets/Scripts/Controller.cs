@@ -25,6 +25,9 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
     private bool isWallRunning = false;
     private float camRot;
 
+    //public Transform rayRightOrigin;
+    //public Transform rayLeftOrigin;
+
     //Camera height
     [SerializeField] private float cameraYoffset;
 
@@ -61,6 +64,7 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
         movementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         localEulerAnglesInput = new Vector2(Input.GetAxisRaw("Mouse X"), mousey);
 
+
         if (Input.GetButtonDown("Jump"))
         {
             Jump();
@@ -70,7 +74,12 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
         {
 
             playerCam.GetComponent<Camera>().fieldOfView = 96;
+
+            //rayRightOrigin = new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z);
+            //rayLeftOrigin = new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z);
+
             if (Physics.Raycast(transform.position, transform.right, 1f, ground))
+            //if (Physics.Raycast(rayRightOrigin, transform.right, 1f, ground))
             {
                 rb.velocity += transform.right * 0.1f;
 
@@ -82,19 +91,23 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
 
             }
             if (Physics.Raycast(transform.position, -transform.right, 1f, ground))
+            //if (Physics.Raycast(rayLeftOrigin, transform.right, 1f, ground))
             {
+                rb.velocity += transform.right * -0.1f;
+
                 if (playerCam.localEulerAngles.z > 345f)
                 {
                     playerCam.localEulerAngles += new Vector3(0, 0, -100f * Time.deltaTime);
                 }
-                playerCam.localEulerAngles += new Vector3(0, 0, -10f * Time.deltaTime);
-                rb.velocity += transform.right * -0.1f;
+                //playerCam.localEulerAngles += new Vector3(0, 0, -10f * Time.deltaTime);
+                
             }
         }
         else
         {
             //90 fov is the best fov don't argue with me
             playerCam.GetComponent<Camera>().fieldOfView = 90;
+            playerCam.localEulerAngles = new Vector3(0, 0, 0);
         }
         if (isWallRunning && rb.velocity.magnitude <= 30)
         {
@@ -141,6 +154,7 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
 
     private bool canWallRun = true;
     //called when collision is entered
+    
     private void OnCollisionEnter(Collision other)
     {
         //using dot product to make sure we are infront of or behind the collision normal and not on top of or below
@@ -156,6 +170,15 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
         isWallRunning = false;
         StartCoroutine(WallRunCooldown());
     }
+
+    private void CheckWallRun()
+    {
+        //if (Physics.Raycast(rayRightOrigin.position,Vector3.right,1f))
+        //{
+
+        //}
+    }
+
     private IEnumerator WallRunCooldown()
     {
         canWallRun = false;
