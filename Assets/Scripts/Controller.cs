@@ -1,9 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FishNet.Connection;
+using FishNet.Object;
 
 
-public class Controller : MonoBehaviour //interface MonoBehavior provides methods Start() Update() OnCollisionEnter() OnCollisionExit()
+
+public class Controller : NetworkBehaviour //interface MonoBehavior provides methods Start() Update() OnCollisionEnter() OnCollisionExit()
 {
     //Fields marked as public are to be changed in the inspector
     public float speed = 5;
@@ -21,6 +24,26 @@ public class Controller : MonoBehaviour //interface MonoBehavior provides method
     private Rigidbody rb;
     private bool isWallRunning = false;
     private float camRot;
+
+    //Camera height
+    [SerializeField] private float cameraYoffset;
+
+    private void Awake() {
+        playerCam = GameObject.FindWithTag("Camera").transform;
+    }
+
+
+    public override void OnStartClient(){
+        base.OnStartClient();
+        if(base.IsOwner){
+            playerCam.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYoffset, transform.position.z);
+            playerCam.transform.SetParent(transform);
+        }else{
+            gameObject.GetComponent<Controller>().enabled = false;
+        }
+    }
+
+
     //called on start
     private void Start()
     {
