@@ -119,13 +119,13 @@ MonoBehaviour:
   _addedNetworkObject: {fileID: 616051915}
   _networkObjectCache: {fileID: 616051915}
   walkSpeed: 7
-  sprintSpeed: 10
+  sprintSpeed: 14
   slideSpeed: 30
   wallrunSpeed: 8.5
   speedIncreaseMultiplier: 1.5
   slopeIncreaseMultiplier: 2.5
   groundDrag: 4
-  jumpForce: 12
+  jumpForce: 8
   jumpCooldown: 0.25
   airMultiplier: 0.4
   crouchSpeed: 3.5
@@ -286,7 +286,7 @@ MonoBehaviour:
   minJumpHeight: 2
   exitWallTime: 0.2
   useGravity: 1
-  gravityCounterForce: 20
+  gravityCounterForce: 2
   orientation: {fileID: 962186961121677111}
 --- !u!1 &7847106108894589818
 GameObject:

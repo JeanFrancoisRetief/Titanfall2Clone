@@ -80,10 +80,10 @@ public class WallRunningAdvanced : MonoBehaviour
         // Getting Inputs
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
-
+        /*
         upwardsRunning = Input.GetKey(upwardsRunKey);
         downwardsRunning = Input.GetKey(downwardsRunKey);
-
+        */
         // State 1 - Wallrunning
         if((wallLeft || wallRight) && verticalInput > 0 && AboveGround() && !exitingWall)
         {
@@ -154,10 +154,12 @@ public class WallRunningAdvanced : MonoBehaviour
         rb.AddForce(wallForward * wallRunForce, ForceMode.Force);
 
         // upwards/downwards force
+        /*
         if (upwardsRunning)
             rb.velocity = new Vector3(rb.velocity.x, wallClimbSpeed, rb.velocity.z);
         if (downwardsRunning)
             rb.velocity = new Vector3(rb.velocity.x, -wallClimbSpeed, rb.velocity.z);
+        */
 
         // push to wall force
         if (!(wallLeft && horizontalInput > 0) && !(wallRight && horizontalInput < 0))
