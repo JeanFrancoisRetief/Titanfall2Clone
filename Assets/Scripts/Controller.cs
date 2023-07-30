@@ -252,11 +252,33 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
             rb.drag = groundDrag;
         else
             rb.drag = 0;
+
+
+        /*if(grounded && Input.GetKey(KeyCode.W) && Input.GetKeyDown(crouchKey))
+        {
+            PowerSlide();
+        }
+        //test
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            PowerSlide();
+        }*/
+
     }
 
     private void FixedUpdate()
     {
         MovePlayer();
+    }
+
+    private void PowerSlide()
+    {
+        //exitingSlope = true;
+        //rb.velocity = new Vector3(0f, 0f,0f);
+       // rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        //rb.AddForce(transform.forward * jumpForce/4, ForceMode.Impulse);
+        //rb.AddForce(playerCam.forward * 2000, ForceMode.Acceleration);
+        
     }
 
     private void MyInput()
