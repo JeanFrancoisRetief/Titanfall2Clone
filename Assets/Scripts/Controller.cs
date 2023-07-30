@@ -112,6 +112,8 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
     //Camera height
     [SerializeField] private float cameraYoffset;
 
+    private int doubleJumpCount;
+
     private void Awake() {
         playerCam = GameObject.FindWithTag("Camera").transform;
     }
@@ -147,6 +149,8 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
         readyToJump = true;
 
         startYScale = transform.localScale.y;
+
+        doubleJumpCount = 1;
 
     }
     //called every frame
@@ -263,6 +267,11 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
         {
             PowerSlide();
         }*/
+        if (grounded)
+            doubleJumpCount = 1;
+
+        if (wallrunning)
+            doubleJumpCount = 0;
 
     }
 
@@ -271,6 +280,20 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
         MovePlayer();
     }
 
+    private void DoubleJump()
+    {
+        // reset y velocity
+        if(doubleJumpCount != 0)
+        {
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+            rb.AddForce(transform.up * (jumpForce), ForceMode.Impulse);
+
+            doubleJumpCount--;
+        }
+        
+    }
+    /*
     private void PowerSlide()
     {
         //exitingSlope = true;
@@ -280,20 +303,26 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
         //rb.AddForce(playerCam.forward * 2000, ForceMode.Acceleration);
         
     }
-
+    */
     private void MyInput()
     {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKeyDown(jumpKey) && readyToJump && grounded)
         {
             readyToJump = false;
 
             Jump();
 
             Invoke(nameof(ResetJump), jumpCooldown);
+        }
+
+        //doubleJump
+        if (Input.GetKeyDown(jumpKey) && !grounded)
+        {
+            DoubleJump();
         }
 
         // start crouch
