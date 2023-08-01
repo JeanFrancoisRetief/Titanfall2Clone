@@ -345,12 +345,12 @@ MonoBehaviour:
   gunTip: {fileID: 4303060730508814464}
   whatIsGrappleable:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 63
   lr: {fileID: 7378798385569931919}
-  maxGrappleDistance: 50
+  maxGrappleDistance: 30
   grappleDelayTime: 0.25
   overshootYAxis: 2
-  grapplingCd: 0.5
+  grapplingCd: 1
   grappleKey: 324
 --- !u!1 &3538720594787526948
 GameObject:
