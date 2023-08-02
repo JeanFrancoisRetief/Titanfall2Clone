@@ -7,6 +7,8 @@ TagManager:
   - Camera
   - RightTrigger
   - LeftTrigger
+  - HealthText
+  - BulletHoler
   layers:
   - Default
   - TransparentFX
