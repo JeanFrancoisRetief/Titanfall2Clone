@@ -6652,7 +6652,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: -19, y: -23}
-  m_SizeDelta: {x: -1562.7114, y: -930.0659}
+  m_SizeDelta: {x: -1529.5706, y: -930.0659}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &1573163723
 MonoBehaviour:
@@ -6687,7 +6687,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Health:
+  m_Text: 'Health: 100
 
 '
 --- !u!222 &1573163724
@@ -7593,7 +7593,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -1007, y: 495}
+  m_AnchoredPosition: {x: -978, y: 495}
   m_SizeDelta: {x: 739.9468, y: 665.7759}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1781569003

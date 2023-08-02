@@ -10,16 +10,19 @@ public class PlayerShoot : NetworkBehaviour
 {
     [Header("Gun parameters")]
     public int damage;
-    public int shotCooldown;
+    public float shotCooldown;
     [SerializeField] float horizontalSpread, verticalSpread;
-    [SerializeField] float horizontalRecoil, verticalRecoil;
+    public float horizontalRecoil, verticalRecoil;
     [SerializeField] private int ammocount;
-    [SerializeField] private int reloadTime;
+    [SerializeField] private int maxAmmo;
+    [SerializeField] private float reloadTime;
+    [SerializeField] private float TacreloadTime;
+    [SerializeField] bool reloading;
 
-    public float[] recoilvalues; // the are stored in sets of two for each gun
+
+    public float[] recoilvalues; // these are stored in sets of two for each gun
 
     bool ADSactive;
-
 
     [Header("Sprite management")]
     public Sprite[] ADSsprites;
@@ -36,7 +39,7 @@ public class PlayerShoot : NetworkBehaviour
     float fireTimer;
     GameObject mainCam;
     BulletHoleScript holeMaker;
-    // Controller cntrl;
+    Controller cntrl;
 
 
     private void Awake() {
@@ -46,7 +49,16 @@ public class PlayerShoot : NetworkBehaviour
         ADSelement = GameObject.Find("ADSElement");
         Hipelement = GameObject.Find("HipElement");
 
+        ammocount = maxAmmo;
     }
+
+    public override void OnStartClient(){
+        if(base.IsOwner){
+            cntrl = gameObject.GetComponent<Controller>();
+        }
+    }
+
+    
 
     // Update is called once per frame
     void Update()
@@ -59,7 +71,11 @@ public class PlayerShoot : NetworkBehaviour
             ADSactive = false;
         }
 
-        if(ADSactive){
+        if(reloading){
+            ADSelement.SetActive(false);
+            Hipelement.SetActive(false);
+        }
+        else if(ADSactive){
             ADSelement.SetActive(true);
             Hipelement.SetActive(false);
         }else{
@@ -68,13 +84,25 @@ public class PlayerShoot : NetworkBehaviour
         }
 
         if(Input.GetButton("Fire1")){
-            if(fireTimer <= 0){
+            if(fireTimer <= 0 && ammocount > 0 && !reloading){
+                ammocount -= 1;
                 if(ADSactive){
                     ADSFire();
                 }else{
                     hipFire();
                 }
 
+            }else if(ammocount <= 0 && !reloading){
+                StartCoroutine(reload(true));
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            if(ammocount > 0){
+                StartCoroutine(reload(false));
+            }else{
+                StartCoroutine(reload(true));
             }
         }
 
@@ -104,19 +132,38 @@ public class PlayerShoot : NetworkBehaviour
     }
 
     void ADSFire(){
-        float xRecoil = Random.Range(-horizontalRecoil, horizontalRecoil) / 2;
-        float yRecoil = Random.Range(-verticalRecoil, verticalRecoil) / 2;
-
-
-        float xRotation = mainCam.transform.rotation.x + xRecoil;
-        float yRotation = mainCam.transform.rotation.x + yRecoil;
+        Debug.Log("firing");
         
-        mainCam.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        // float xRecoil = Random.Range(-horizontalRecoil, horizontalRecoil) / 2;
+        // float yRecoil = Random.Range(-verticalRecoil, verticalRecoil) / 2;
+
+        // float xRotation = mainCam.transform.rotation.x + xRecoil;
+        // float yRotation = mainCam.transform.rotation.x + yRecoil;
+        
+        // mainCam.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+
+        cntrl.recoil = true;
 
         ShootServer(damage, mainCam.transform.position, mainCam.transform.position);
-        holeMaker.makeHole(mainCam.transform.position);
+        holeMaker.makeHole(mainCam.transform.forward);
         fireTimer = shotCooldown;
 
 
+    }
+
+    IEnumerator reload(bool isTac){
+        if(isTac){
+            reloading = true;
+
+            yield return new WaitForSeconds(TacreloadTime);
+            ammocount = maxAmmo;
+            reloading = false;
+        }else{
+            reloading = true;
+
+            yield return new WaitForSeconds(reloadTime);
+            ammocount = maxAmmo;
+            reloading = false;
+        }
     }
 }

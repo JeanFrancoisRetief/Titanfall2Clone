@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4631597074182965741}
   - component: {fileID: 4631597074182965740}
-  - component: {fileID: -9114210426199034961}
+  - component: {fileID: -4454854006676690659}
   m_Layer: 0
   m_Name: Bullet hole 1
   m_TagString: Untagged
@@ -83,7 +83,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &-9114210426199034961
+--- !u!114 &-4454854006676690659
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

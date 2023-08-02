@@ -9,7 +9,7 @@ using UnityEngine.UI;
 
 public class Playerhealth : NetworkBehaviour
 {
-    [SyncVar] public int health = 10;
+    [SyncVar] public int health = 100;
     [SerializeField] private int maxhealth;
 
     float healthtick;

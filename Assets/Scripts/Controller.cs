@@ -88,6 +88,8 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
     float xRotation;
     float yRotation;
 
+    public bool recoil = false;
+
     [Header("Old")]
     /*
     //Fields marked as public are to be changed in the inspector
@@ -119,6 +121,8 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
 
     private int doubleJumpCount;
 
+    PlayerShoot shooter;
+
     private void Awake() {
         playerCam = GameObject.FindWithTag("Camera").transform;
     }
@@ -129,7 +133,8 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
         if(base.IsOwner){
             playerCam.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYoffset, transform.position.z);
             playerCam.transform.SetParent(transform);
-            GameObject.Find("Gun?").SetActive(false);
+            // GameObject.Find("Gun?").SetActive(false);
+            shooter = gameObject.GetComponent<PlayerShoot>();
         }else{
             gameObject.GetComponent<Controller>().enabled = false;
         }
@@ -172,9 +177,14 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
         float mouseX = Input.GetAxisRaw("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxisRaw("Mouse Y") * Time.deltaTime * sensY;
 
-        yRotation += mouseX;
+        if(recoil){
+            recoilFunction(shooter.horizontalRecoil, shooter.verticalRecoil, mouseX, mouseY);
+        }else{
+            yRotation += mouseX;
+            xRotation -= mouseY;
+        }
 
-        xRotation -= mouseY;
+       
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         // rotate cam and orientation
@@ -597,6 +607,18 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
 
             GetComponent<Grappling>().StopGrapple();
         }
+    }
+
+    //I'm handling recoil here because it simplifies a conflict with the camera contoller
+
+    public void recoilFunction(float horRecoil, float verRecoil, float mouX, float mouY){
+        float xRecoil = Random.Range(-horRecoil, horRecoil) / 2;
+        float yRecoil = Random.Range(-verRecoil, verRecoil) / 2;
+        
+        xRotation += mouX + yRecoil;
+        yRotation += mouY + xRecoil;
+
+        recoil = false;
     }
 
 
