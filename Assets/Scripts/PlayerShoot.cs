@@ -43,7 +43,7 @@ public class PlayerShoot : NetworkBehaviour
 
 
     private void Awake() {
-        mainCam = GameObject.Find("Main Camera");
+        mainCam = GameObject.FindWithTag("Camera");
         holeMaker = GameObject.FindWithTag("BulletHoler").GetComponent<BulletHoleScript>();
 
         ADSelement = GameObject.Find("ADSElement");

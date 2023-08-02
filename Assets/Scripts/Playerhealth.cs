@@ -18,7 +18,7 @@ public class Playerhealth : NetworkBehaviour
     private Text healthText;
 
     private void Start() {
-        healthText = GameObject.FindWithTag("HealthText").GetComponent<Text>();
+        //healthText = GameObject.FindWithTag("HealthText").GetComponent<Text>();
     }
 
     private void Update() {
@@ -26,7 +26,7 @@ public class Playerhealth : NetworkBehaviour
             return;
         }
         
-        healthText.text =  "Health: " + health.ToString();
+        //healthText.text =  "Health: " + health.ToString();
 
         if(health < maxhealth && healthtick <= 0){
             health += 1;

@@ -407,7 +407,7 @@ MonoBehaviour:
   Reticlesprites: []
   ADSelement: {fileID: 0}
   Hipelement: {fileID: 0}
-  Reticleelement: {fileID: 0
+  Reticleelement: {fileID: 0}
 --- !u!1 &3538720594787526948
 GameObject:
   m_ObjectHideFlags: 0
