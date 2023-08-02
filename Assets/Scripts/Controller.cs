@@ -129,6 +129,7 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
         if(base.IsOwner){
             playerCam.transform.position = new Vector3(transform.position.x, transform.position.y + cameraYoffset, transform.position.z);
             playerCam.transform.SetParent(transform);
+            GameObject.Find("Gun?").SetActive(false);
         }else{
             gameObject.GetComponent<Controller>().enabled = false;
         }
