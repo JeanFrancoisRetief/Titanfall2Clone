@@ -35,17 +35,6 @@ public class Playerhealth : NetworkBehaviour
     }
 
     public override void OnStartClient(){
-        if(base.IsOwner){
-            prompt = GameObject.Find("Respawnprompt");
-            prompt.SetActive(false);
-
-
-            ADSelement = GameObject.Find("ADSElement");
-            Hipelement = GameObject.Find("HipElement");
-        }
-    }
-
-    public override void OnStartClient(){
         // base.OnStartClient();
         if(base.IsOwner){
             prompt = GameObject.Find("Respawnprompt");
