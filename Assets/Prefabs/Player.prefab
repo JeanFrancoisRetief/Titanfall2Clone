@@ -352,7 +352,7 @@ MonoBehaviour:
   gunTip: {fileID: 4303060730508814464}
   whatIsGrappleable:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 447
   lr: {fileID: 7378798385569931919}
   maxGrappleDistance: 50
   grappleDelayTime: 0.25
