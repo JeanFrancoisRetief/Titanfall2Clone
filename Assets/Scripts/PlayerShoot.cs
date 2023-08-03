@@ -151,6 +151,11 @@ public class PlayerShoot : NetworkBehaviour
 
     }
 
+    public void respawnreload(){
+        ammocount = maxAmmo;
+        reloading = false;
+    }
+
     IEnumerator reload(bool isTac){
         if(isTac){
             reloading = true;
