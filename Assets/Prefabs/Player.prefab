@@ -235,7 +235,7 @@ MonoBehaviour:
   _interpolation: 2
   _extrapolation: 2
   _enableTeleport: 0
-  _teleportThreshold: 1
+  _teleportThreshold: 15
   _clientAuthoritative: 1
   _sendToOwner: 1
   _enableNetworkLod: 1
@@ -374,9 +374,10 @@ MonoBehaviour:
   _componentIndexCache: 2
   _addedNetworkObject: {fileID: 616051915}
   _networkObjectCache: {fileID: 616051915}
-  health: 100
+  health: 0
   maxhealth: 100
   tickTime: 1.1
+  respawnLocations: []
 --- !u!114 &6129629670440968038
 MonoBehaviour:
   m_ObjectHideFlags: 0
