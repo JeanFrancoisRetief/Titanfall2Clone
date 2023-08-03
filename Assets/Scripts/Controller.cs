@@ -125,6 +125,7 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
 
     private void Awake() {
         playerCam = GameObject.FindWithTag("Camera").transform;
+        GameObject.Find("InputField").SetActive(false);
     }
 
 
@@ -137,6 +138,8 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
             shooter = gameObject.GetComponent<PlayerShoot>();
         }else{
             gameObject.GetComponent<Controller>().enabled = false;
+            gameObject.GetComponent<PowerSliding>().enabled = false;
+            // gameObject.GetComponent<Rigidbody>(.ena).enabled = false;
         }
     }
 

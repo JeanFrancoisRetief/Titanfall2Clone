@@ -17,6 +17,7 @@ public class Playerhealth : NetworkBehaviour
     [SerializeField] private float tickTime;
 
     private Text healthText;
+    [SerializeField] private bool isTarget;
 
     //Respawning
     public GameObject[] respawnLocations;
@@ -35,17 +36,27 @@ public class Playerhealth : NetworkBehaviour
     }
 
     public override void OnStartClient(){
+        // base.OnStartClient();
         if(base.IsOwner){
             prompt = GameObject.Find("Respawnprompt");
-            prompt.SetActive(false);
-
+            prompt.SetActive(false);    
 
             ADSelement = GameObject.Find("ADSElement");
-            Hipelement = GameObject.Find("HipElement");
+            Hipelement = GameObject.Find("HipElement");        
         }
     }
 
+
     private void Update() {
+        if(isTarget){
+            if(health > 0){
+                return;
+            }else{
+                Destroy(gameObject);
+            }
+        }
+        
+        
         if(!base.IsOwner){
             return;
         }
@@ -81,7 +92,7 @@ public class Playerhealth : NetworkBehaviour
     }
 
     public void takedamage(int dmg){
-        if(base.IsOwner) return;
+        // if(base.IsOwner) return;
 
         health -= dmg;
     }

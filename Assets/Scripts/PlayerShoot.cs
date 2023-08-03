@@ -113,7 +113,9 @@ public class PlayerShoot : NetworkBehaviour
 
     [ServerRpc (RequireOwnership = false)]
     private void ShootServer(int DMG, Vector3 position, Vector3 direction){
+        Debug.DrawRay(position, direction, Color.green, 2f);
         if(Physics.Raycast(position, direction, out RaycastHit hitter) && hitter.transform.TryGetComponent(out Playerhealth enemHealth)){
+            Debug.Log(enemHealth);
             enemHealth.takedamage(damage);
         }
     }
@@ -132,7 +134,7 @@ public class PlayerShoot : NetworkBehaviour
     }
 
     void ADSFire(){
-        Debug.Log("firing");
+        // Debug.Log("firing");
         
         // float xRecoil = Random.Range(-horizontalRecoil, horizontalRecoil) / 2;
         // float yRecoil = Random.Range(-verticalRecoil, verticalRecoil) / 2;
@@ -144,7 +146,7 @@ public class PlayerShoot : NetworkBehaviour
 
         cntrl.recoil = true;
 
-        ShootServer(damage, mainCam.transform.position, mainCam.transform.position);
+        ShootServer(damage, mainCam.transform.position, mainCam.transform.forward);
         holeMaker.makeHole(mainCam.transform.forward);
         fireTimer = shotCooldown;
 
