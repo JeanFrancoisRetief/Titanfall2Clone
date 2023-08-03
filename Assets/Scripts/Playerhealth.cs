@@ -30,16 +30,15 @@ public class Playerhealth : NetworkBehaviour
 
     private void Start() {
         //healthText = GameObject.FindWithTag("HealthText").GetComponent<Text>();
-        prompt = GameObject.Find("Respawnprompt");
-        prompt.SetActive(false);
 
-        
-
+        respawnLocations = GameObject.FindGameObjectsWithTag("respawnLoc");
     }
 
     public override void OnStartClient(){
         if(base.IsOwner){
-            respawnLocations = GameObject.FindGameObjectsWithTag("respawnLoc");
+            prompt = GameObject.Find("Respawnprompt");
+            prompt.SetActive(false);
+
 
             ADSelement = GameObject.Find("ADSElement");
             Hipelement = GameObject.Find("HipElement");
