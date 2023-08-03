@@ -17,6 +17,7 @@ public class Playerhealth : NetworkBehaviour
     [SerializeField] private float tickTime;
 
     private Text healthText;
+    [SerializeField] private bool isTarget;
 
     //Respawning
     public GameObject[] respawnLocations;
@@ -47,6 +48,15 @@ public class Playerhealth : NetworkBehaviour
 
 
     private void Update() {
+        if(isTarget){
+            if(health > 0){
+                return;
+            }else{
+                Destroy(gameObject);
+            }
+        }
+        
+        
         if(!base.IsOwner){
             return;
         }

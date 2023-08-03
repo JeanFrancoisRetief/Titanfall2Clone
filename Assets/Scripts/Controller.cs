@@ -125,6 +125,7 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
 
     private void Awake() {
         playerCam = GameObject.FindWithTag("Camera").transform;
+        GameObject.Find("InputField").SetActive(false);
     }
 
 

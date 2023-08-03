@@ -17,7 +17,7 @@ public class BulletHoleScript : MonoBehaviour
     public void makeHole(Vector3 angle){
         RaycastHit hitInfo;
         if(Physics.Raycast(transform.position, angle, out hitInfo)){
-            Debug.Log(hitInfo);
+            // Debug.Log(hitInfo);
             GameObject obj = Instantiate(bulletHolePrefabs[0], hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
             obj.transform.position += obj.transform.forward/1000;
         }

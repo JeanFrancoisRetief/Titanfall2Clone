@@ -377,6 +377,7 @@ MonoBehaviour:
   health: 0
   maxhealth: 100
   tickTime: 1.1
+  isTarget: 0
   respawnLocations: []
 --- !u!114 &6129629670440968038
 MonoBehaviour:
@@ -393,7 +394,7 @@ MonoBehaviour:
   _componentIndexCache: 3
   _addedNetworkObject: {fileID: 616051915}
   _networkObjectCache: {fileID: 616051915}
-  damage: 1
+  damage: 25
   shotCooldown: 0.074
   horizontalSpread: 0.03
   verticalSpread: 0.04
