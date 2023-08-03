@@ -89,6 +89,7 @@ public class Playerhealth : NetworkBehaviour
         if(healthtick > 0){
             healthtick -= Time.deltaTime;
         }
+
     }
 
     public void takedamage(int dmg){

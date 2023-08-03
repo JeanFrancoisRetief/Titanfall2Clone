@@ -190,7 +190,7 @@ MonoBehaviour:
   NetworkObserver: {fileID: 0}
   <PrefabId>k__BackingField: 4
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 0
+  _scenePathHash: 774665742
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 7807759643866311769
   <IsNested>k__BackingField: 0
@@ -376,6 +376,12 @@ MonoBehaviour:
   _networkObjectCache: {fileID: 616051915}
   health: 0
   maxhealth: 100
+  redSplatterImage: {fileID: 0}
+  hurtImage: {fileID: 0}
+  hurtTimer: 0.1
+  healCooldown: 3
+  maxHealCooldown: 3
+  startCooldown: 0
   tickTime: 1.1
   isTarget: 0
   respawnLocations: []
