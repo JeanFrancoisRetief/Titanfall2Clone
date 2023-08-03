@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class Playerhealth : NetworkBehaviour
 {
+    //Health and regen
     [SyncVar] public int health = 100;
     [SerializeField] private int maxhealth;
 
@@ -17,12 +18,46 @@ public class Playerhealth : NetworkBehaviour
 
     private Text healthText;
 
+    //Respawning
+    public GameObject[] respawnLocations;
+    GameObject prompt;
+    GameObject ADSelement;
+    GameObject Hipelement;
+    GameObject Reticleelement;
+
+    bool despawned;
+    bool respawnReady = false;
+
     private void Start() {
         //healthText = GameObject.FindWithTag("HealthText").GetComponent<Text>();
+        prompt = GameObject.Find("Respawnprompt");
+        prompt.SetActive(false);
+
+        respawnLocations = GameObject.FindGameObjectsWithTag("respawnLoc");
+
+        ADSelement = GameObject.Find("ADSElement");
+        Hipelement = GameObject.Find("HipElement");
+
     }
 
     private void Update() {
         if(!base.IsOwner){
+            return;
+        }
+
+        // if(Input.GetButton("Jump")){
+        //     transform.position = respawnLocations[1].transform.position;
+        // } Teleportation test
+
+        if(despawned){
+            gameObject.transform.position = new Vector3(100, 100, 100);
+            if(Input.GetButton("Jump") && respawnReady){
+                respawn();
+            }
+            return;
+        }
+        if(health == 0 && !despawned){
+            despawn();
             return;
         }
         
@@ -44,5 +79,53 @@ public class Playerhealth : NetworkBehaviour
         if(base.IsOwner) return;
 
         health -= dmg;
+    }
+
+
+    void despawn(){
+        despawned = true;
+        Transform playerCam = GameObject.FindWithTag("Camera").transform;
+
+        playerCam.parent = null;
+
+        gameObject.GetComponent<CapsuleCollider>().enabled = false;
+
+        gameObject.GetComponent<PlayerShoot>().enabled = false;
+        ADSelement.SetActive(false);
+        Hipelement.SetActive(false);
+        gameObject.transform.position = new Vector3(100, 100, 100);
+        StartCoroutine(respawnwait());
+
+    }
+
+    void respawn(){
+        health = maxhealth;
+        
+        Transform playerCam = GameObject.FindWithTag("Camera").transform;
+        playerCam.transform.position = new Vector3(transform.position.x, transform.position.y + .5f, transform.position.z);
+        playerCam.transform.SetParent(transform);
+
+        gameObject.GetComponent<CapsuleCollider>().enabled = true;
+
+        prompt.SetActive(false);
+
+        gameObject.GetComponent<PlayerShoot>().enabled = true;
+        gameObject.GetComponent<PlayerShoot>().respawnreload();
+
+        int spawnpoint = Random.Range(0, respawnLocations.Length);
+
+        transform.position = respawnLocations[spawnpoint].transform.position;
+
+        respawnReady = false;
+        despawned = false;
+
+        Debug.Log("respawn");
+    }
+
+    IEnumerator respawnwait(){
+        yield return new WaitForSeconds(2f);
+
+        respawnReady = true;
+        prompt.SetActive(true);
     }
 }
