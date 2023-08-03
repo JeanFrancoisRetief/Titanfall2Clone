@@ -137,6 +137,8 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
             shooter = gameObject.GetComponent<PlayerShoot>();
         }else{
             gameObject.GetComponent<Controller>().enabled = false;
+            gameObject.GetComponent<PowerSliding>().enabled = false;
+            // gameObject.GetComponent<Rigidbody>(.ena).enabled = false;
         }
     }
 
@@ -167,6 +169,8 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
     //called every frame
     private void Update()
     {
+        
+        
         /*
         float mousey = Input.GetAxisRaw("Mouse Y");
         movementInput = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
