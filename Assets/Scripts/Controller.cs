@@ -169,6 +169,9 @@ public class Controller : NetworkBehaviour //interface MonoBehavior provides met
     //called every frame
     private void Update()
     {
+        if(!base.IsOwner){
+            transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
         
         
         /*
