@@ -10,6 +10,7 @@ TagManager:
   - HealthText
   - BulletHoler
   - respawnLoc
+  - Deaths
   layers:
   - Default
   - TransparentFX
