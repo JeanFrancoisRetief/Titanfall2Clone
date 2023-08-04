@@ -42,7 +42,8 @@ public class Playerhealth : NetworkBehaviour
             prompt.SetActive(false);    
 
             ADSelement = GameObject.Find("ADSElement");
-            Hipelement = GameObject.Find("HipElement");        
+            Hipelement = GameObject.Find("HipElement"); 
+            Reticleelement = GameObject.Find("Reticle");       
         }
     }
 
@@ -110,9 +111,10 @@ public class Playerhealth : NetworkBehaviour
         gameObject.GetComponent<PlayerShoot>().enabled = false;
         ADSelement.SetActive(false);
         Hipelement.SetActive(false);
+        Reticleelement.SetActive(false);
         gameObject.transform.position = new Vector3(100, 100, 100);
+        
         StartCoroutine(respawnwait());
-
     }
 
     void respawn(){
