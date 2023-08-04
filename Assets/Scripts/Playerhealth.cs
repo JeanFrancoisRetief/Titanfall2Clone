@@ -74,7 +74,7 @@ public class Playerhealth : NetworkBehaviour
             deathCount.text = "Death: " + deaths.ToString();
         }
 
-
+        //This controls the jam
         if(healthoverlay != null){
             var tempcol = healthoverlay.color;
             tempcol.a = (100 - health) / 10;

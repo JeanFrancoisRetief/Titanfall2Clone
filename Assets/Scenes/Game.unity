@@ -5587,7 +5587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &700713637
 RectTransform:
   m_ObjectHideFlags: 0
@@ -15720,38 +15720,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 307684142828683390, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
-      propertyPath: m_Name
-      value: Bullet hole 2
-      objectReference: {fileID: 0}
     - target: {fileID: 4393252309867130425, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -15796,6 +15764,38 @@ PrefabInstance:
       propertyPath: Spawns.Array.data[0]
       value: 
       objectReference: {fileID: 1095859399}
+    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 307684142828683388, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 307684142828683390, guid: dab3bffa349dff944be6640ee687ff6e, type: 3}
+      propertyPath: m_Name
+      value: Bullet hole 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b650fca685f2eb41a86538aa883e4c1, type: 3}
 --- !u!1 &1980521851 stripped
