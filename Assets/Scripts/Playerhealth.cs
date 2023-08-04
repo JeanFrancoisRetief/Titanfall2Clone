@@ -26,7 +26,7 @@ public class Playerhealth : NetworkBehaviour
     GameObject Hipelement;
     GameObject Reticleelement;
 
-    bool despawned;
+    bool despawned = false;
     bool respawnReady = false;
 
     private void Start() {
@@ -38,7 +38,7 @@ public class Playerhealth : NetworkBehaviour
     public override void OnStartClient(){
         // base.OnStartClient();
         if(base.IsOwner){
-            
+            healthText = GameObject.FindWithTag("HealthText").GetComponent<Text>();
             
             prompt = GameObject.Find("Respawnprompt");
             prompt.SetActive(false);    
@@ -82,13 +82,14 @@ public class Playerhealth : NetworkBehaviour
                 respawn();
             }
             return;
-        }
-        if(health == 0 && !despawned){
+        }else if(health <= 0 && !despawned){
             despawn();
             return;
         }
         
-        //healthText.text =  "Health: " + health.ToString();
+        if(healthText != null){
+            healthText.text =  "Health: " + health.ToString();
+        }
 
         if(health < maxhealth && healthtick <= 0){
             health += 1;
@@ -105,6 +106,18 @@ public class Playerhealth : NetworkBehaviour
 
     public void takedamage(int dmg){
         // if(base.IsOwner) return;
+
+        // if(despawned){
+        //     gameObject.transform.position = new Vector3(100, 100, 100);
+        //     if(Input.GetButton("Jump") && respawnReady){
+        //         respawn();
+        //     }
+        //     return;
+        // }
+        // if(health <= 0 && !despawned){
+        //     despawn();
+        //     return;
+        // }
 
         health -= dmg;
     }
