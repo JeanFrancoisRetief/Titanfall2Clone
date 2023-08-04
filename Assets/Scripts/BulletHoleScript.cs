@@ -18,7 +18,8 @@ public class BulletHoleScript : MonoBehaviour
         RaycastHit hitInfo;
         if(Physics.Raycast(transform.position, angle, out hitInfo)){
             // Debug.Log(hitInfo);
-            GameObject obj = Instantiate(bulletHolePrefabs[0], hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+            int a = Random.Range(0, 2);
+            GameObject obj = Instantiate(bulletHolePrefabs[a], hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
             obj.transform.position += obj.transform.forward/1000;
         }
     }

@@ -18,7 +18,7 @@ public class AdressSet : MonoBehaviour
 
     private void Update() {
         boat.SetClientAddress(address);
-        adressDisplay.text = "Adress is:" + address;
+        adressDisplay.text = "Address is: " + address;
     }
 
     public void setAdress(){

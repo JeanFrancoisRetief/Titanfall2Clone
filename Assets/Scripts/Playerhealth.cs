@@ -26,7 +26,7 @@ public class Playerhealth : NetworkBehaviour
     GameObject Hipelement;
     GameObject Reticleelement;
 
-    bool despawned;
+    bool despawned = false;
     bool respawnReady = false;
 
     private void Start() {
@@ -38,11 +38,18 @@ public class Playerhealth : NetworkBehaviour
     public override void OnStartClient(){
         // base.OnStartClient();
         if(base.IsOwner){
+            healthText = GameObject.FindWithTag("HealthText").GetComponent<Text>();
+            
             prompt = GameObject.Find("Respawnprompt");
             prompt.SetActive(false);    
 
             ADSelement = GameObject.Find("ADSElement");
-            Hipelement = GameObject.Find("HipElement");        
+            // Debug.Log(ADSelement);
+            Hipelement = GameObject.Find("HipElement"); 
+            Reticleelement = GameObject.Find("Reticle");       
+        }else if(!isTarget){
+            // Debug.Log("gone");
+            gameObject.GetComponent<Playerhealth>().enabled = false;
         }
     }
 
@@ -57,8 +64,12 @@ public class Playerhealth : NetworkBehaviour
         }
         
         
-        if(!base.IsOwner){
-            return;
+        // if(!base.IsOwner){
+        //     return;
+        // }
+
+        if(health <= 0){
+            Debug.Log(health);
         }
 
         // if(Input.GetButton("Jump")){
@@ -71,13 +82,14 @@ public class Playerhealth : NetworkBehaviour
                 respawn();
             }
             return;
-        }
-        if(health == 0 && !despawned){
+        }else if(health <= 0 && !despawned){
             despawn();
             return;
         }
         
-        //healthText.text =  "Health: " + health.ToString();
+        if(healthText != null){
+            healthText.text =  "Health: " + health.ToString();
+        }
 
         if(health < maxhealth && healthtick <= 0){
             health += 1;
@@ -89,10 +101,23 @@ public class Playerhealth : NetworkBehaviour
         if(healthtick > 0){
             healthtick -= Time.deltaTime;
         }
+
     }
 
     public void takedamage(int dmg){
         // if(base.IsOwner) return;
+
+        // if(despawned){
+        //     gameObject.transform.position = new Vector3(100, 100, 100);
+        //     if(Input.GetButton("Jump") && respawnReady){
+        //         respawn();
+        //     }
+        //     return;
+        // }
+        // if(health <= 0 && !despawned){
+        //     despawn();
+        //     return;
+        // }
 
         health -= dmg;
     }
@@ -107,11 +132,13 @@ public class Playerhealth : NetworkBehaviour
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
 
         gameObject.GetComponent<PlayerShoot>().enabled = false;
-        ADSelement.SetActive(false);
-        Hipelement.SetActive(false);
+        ADSelement.GetComponent<Image>().enabled = false;
+        ADSelement.transform.GetChild(0).gameObject.GetComponent<Image>().enabled = false;
+        Hipelement.GetComponent<Image>().enabled = false;
+        Reticleelement.GetComponent<Image>().enabled = false;
         gameObject.transform.position = new Vector3(100, 100, 100);
+        
         StartCoroutine(respawnwait());
-
     }
 
     void respawn(){

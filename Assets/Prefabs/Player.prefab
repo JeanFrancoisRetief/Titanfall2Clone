@@ -188,9 +188,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NetworkObserver: {fileID: 0}
-  <PrefabId>k__BackingField: 4
+  <PrefabId>k__BackingField: 5
   <SpawnableCollectionId>k__BackingField: 0
-  _scenePathHash: 0
+  _scenePathHash: 774665742
   <SceneId>k__BackingField: 0
   <AssetPathHash>k__BackingField: 7807759643866311769
   <IsNested>k__BackingField: 0
@@ -374,7 +374,7 @@ MonoBehaviour:
   _componentIndexCache: 2
   _addedNetworkObject: {fileID: 616051915}
   _networkObjectCache: {fileID: 616051915}
-  health: 0
+  health: 10
   maxhealth: 100
   tickTime: 1.1
   isTarget: 0
@@ -412,6 +412,7 @@ MonoBehaviour:
   ADSelement: {fileID: 0}
   Hipelement: {fileID: 0}
   Reticleelement: {fileID: 0}
+  HitMarker: {fileID: 0}
 --- !u!1 &982007255068252699
 GameObject:
   m_ObjectHideFlags: 0

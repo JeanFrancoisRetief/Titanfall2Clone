@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using FishNet.Object;
 
 
@@ -33,13 +34,14 @@ public class PlayerShoot : NetworkBehaviour
     public GameObject ADSelement;
     public GameObject Hipelement;
     public GameObject Reticleelement;
-
+    public GameObject HitMarker;
 
     [Header("Other")]
     float fireTimer;
     GameObject mainCam;
     BulletHoleScript holeMaker;
     Controller cntrl;
+    bool didhit = false;
 
 
     private void Awake() {
@@ -48,6 +50,11 @@ public class PlayerShoot : NetworkBehaviour
 
         ADSelement = GameObject.Find("ADSElement");
         Hipelement = GameObject.Find("HipElement");
+        Reticleelement = GameObject.Find("Reticle");
+        HitMarker = GameObject.Find("hitmarker");
+
+        HitMarker.GetComponent<Image>().enabled = false;
+
 
         ammocount = maxAmmo;
     }
@@ -72,15 +79,21 @@ public class PlayerShoot : NetworkBehaviour
         }
 
         if(reloading){
-            ADSelement.SetActive(false);
-            Hipelement.SetActive(false);
+            ADSelement.GetComponent<Image>().enabled = false;
+            ADSelement.transform.GetChild(0).gameObject.GetComponent<Image>().enabled = false;
+            Hipelement.GetComponent<Image>().enabled = false;
+            Reticleelement.GetComponent<Image>().enabled = false;
         }
         else if(ADSactive){
-            ADSelement.SetActive(true);
-            Hipelement.SetActive(false);
+            ADSelement.GetComponent<Image>().enabled = true;
+            ADSelement.transform.GetChild(0).gameObject.GetComponent<Image>().enabled = true;
+            Hipelement.GetComponent<Image>().enabled = false;
+            Reticleelement.GetComponent<Image>().enabled = false;
         }else{
-            ADSelement.SetActive(false);
-            Hipelement.SetActive(true);
+            ADSelement.GetComponent<Image>().enabled = false;
+            ADSelement.transform.GetChild(0).gameObject.GetComponent<Image>().enabled = false;
+            Hipelement.GetComponent<Image>().enabled = true;
+            Reticleelement.GetComponent<Image>().enabled = true;
         }
 
         if(Input.GetButton("Fire1")){
@@ -117,6 +130,9 @@ public class PlayerShoot : NetworkBehaviour
         if(Physics.Raycast(position, direction, out RaycastHit hitter) && hitter.transform.TryGetComponent(out Playerhealth enemHealth)){
             Debug.Log(enemHealth);
             enemHealth.takedamage(damage);
+            StartCoroutine(hitTick());
+
+            didhit = true;
         }
     }
 
@@ -129,7 +145,10 @@ public class PlayerShoot : NetworkBehaviour
         
         
         ShootServer(damage, mainCam.transform.position, shotDirection);
-        holeMaker.makeHole(shotDirection);
+        if(!didhit){
+            holeMaker.makeHole(shotDirection);
+        }
+        didhit = false;
         fireTimer = shotCooldown;
     }
 
@@ -147,7 +166,10 @@ public class PlayerShoot : NetworkBehaviour
         cntrl.recoil = true;
 
         ShootServer(damage, mainCam.transform.position, mainCam.transform.forward);
-        holeMaker.makeHole(mainCam.transform.forward);
+        if(!didhit){
+            holeMaker.makeHole(mainCam.transform.forward);
+        }
+        didhit = false;
         fireTimer = shotCooldown;
 
 
@@ -172,5 +194,13 @@ public class PlayerShoot : NetworkBehaviour
             ammocount = maxAmmo;
             reloading = false;
         }
+    }
+
+    IEnumerator hitTick(){
+        HitMarker.GetComponent<Image>().enabled = true;
+
+        yield return new WaitForSeconds(0.5f);
+
+        HitMarker.GetComponent<Image>().enabled = false;
     }
 }
