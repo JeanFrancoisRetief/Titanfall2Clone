@@ -43,6 +43,8 @@ public class PlayerShoot : NetworkBehaviour
     Controller cntrl;
     bool didhit = false;
 
+    Text ammoCounter;
+
 
     private void Awake() {
         mainCam = GameObject.FindWithTag("Camera");
@@ -57,6 +59,8 @@ public class PlayerShoot : NetworkBehaviour
 
 
         ammocount = maxAmmo;
+        ammoCounter = GameObject.Find("Ammo").GetComponent<Text>();
+
     }
 
     public override void OnStartClient(){
@@ -71,6 +75,8 @@ public class PlayerShoot : NetworkBehaviour
     void Update()
     {
         if(!base.IsOwner) return;
+
+        ammoCounter.text = "Ammo: " + ammocount.ToString();
 
         if(Input.GetMouseButton(1)){ 
             ADSactive = true;

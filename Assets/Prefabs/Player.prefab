@@ -374,7 +374,7 @@ MonoBehaviour:
   _componentIndexCache: 2
   _addedNetworkObject: {fileID: 616051915}
   _networkObjectCache: {fileID: 616051915}
-  health: 10
+  health: 100
   maxhealth: 100
   tickTime: 1.1
   isTarget: 0

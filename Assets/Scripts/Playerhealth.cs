@@ -17,6 +17,7 @@ public class Playerhealth : NetworkBehaviour
     [SerializeField] private float tickTime;
 
     private Text healthText;
+    private Image healthoverlay;
     [SerializeField] private bool isTarget;
 
     //Respawning
@@ -29,6 +30,10 @@ public class Playerhealth : NetworkBehaviour
     bool despawned = false;
     bool respawnReady = false;
 
+    //deaths
+    int deaths = 0;
+    private Text deathCount;
+
     private void Start() {
         //healthText = GameObject.FindWithTag("HealthText").GetComponent<Text>();
 
@@ -38,7 +43,9 @@ public class Playerhealth : NetworkBehaviour
     public override void OnStartClient(){
         // base.OnStartClient();
         if(base.IsOwner){
-            healthText = GameObject.FindWithTag("HealthText").GetComponent<Text>();
+            // healthText = GameObject.FindWithTag("HealthText").GetComponent<Text>();
+            healthoverlay = GameObject.FindWithTag("HealthText").GetComponent<Image>();
+            deathCount = GameObject.FindWithTag("Deaths").GetComponent<Text>();
             
             prompt = GameObject.Find("Respawnprompt");
             prompt.SetActive(false);    
@@ -61,6 +68,17 @@ public class Playerhealth : NetworkBehaviour
             }else{
                 Destroy(gameObject);
             }
+        }
+
+        if(deathCount != null){
+            deathCount.text = "Death: " + deaths.ToString();
+        }
+
+
+        if(healthoverlay != null){
+            var tempcol = healthoverlay.color;
+            tempcol.a = (100 - health) / 10;
+            healthoverlay.color = tempcol;
         }
         
         
@@ -126,6 +144,8 @@ public class Playerhealth : NetworkBehaviour
     void despawn(){
         despawned = true;
         Transform playerCam = GameObject.FindWithTag("Camera").transform;
+
+        deaths += 1;
 
         playerCam.parent = null;
 
