@@ -38,12 +38,18 @@ public class Playerhealth : NetworkBehaviour
     public override void OnStartClient(){
         // base.OnStartClient();
         if(base.IsOwner){
+            
+            
             prompt = GameObject.Find("Respawnprompt");
             prompt.SetActive(false);    
 
             ADSelement = GameObject.Find("ADSElement");
+            // Debug.Log(ADSelement);
             Hipelement = GameObject.Find("HipElement"); 
             Reticleelement = GameObject.Find("Reticle");       
+        }else if(!isTarget){
+            // Debug.Log("gone");
+            gameObject.GetComponent<Playerhealth>().enabled = false;
         }
     }
 
@@ -58,8 +64,12 @@ public class Playerhealth : NetworkBehaviour
         }
         
         
-        if(!base.IsOwner){
-            return;
+        // if(!base.IsOwner){
+        //     return;
+        // }
+
+        if(health <= 0){
+            Debug.Log(health);
         }
 
         // if(Input.GetButton("Jump")){
@@ -109,9 +119,10 @@ public class Playerhealth : NetworkBehaviour
         gameObject.GetComponent<CapsuleCollider>().enabled = false;
 
         gameObject.GetComponent<PlayerShoot>().enabled = false;
-        ADSelement.SetActive(false);
-        Hipelement.SetActive(false);
-        Reticleelement.SetActive(false);
+        ADSelement.GetComponent<Image>().enabled = false;
+        ADSelement.transform.GetChild(0).gameObject.GetComponent<Image>().enabled = false;
+        Hipelement.GetComponent<Image>().enabled = false;
+        Reticleelement.GetComponent<Image>().enabled = false;
         gameObject.transform.position = new Vector3(100, 100, 100);
         
         StartCoroutine(respawnwait());
